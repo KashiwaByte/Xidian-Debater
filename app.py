@@ -2,6 +2,7 @@
 import gradio as gr
 import openai, subprocess
 from pathlib import Path
+import pyttsx3
 
 # 换成你自己的api_key
 openai.api_key = "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"
@@ -25,7 +26,7 @@ def transcribe(audio):
     # print(response)
     messages.append(system_message)
 
-    subprocess.call(["wsay", system_message['content']])
+    pyttsx3.speak(system_message['content'])
 
     chat_transcript = ""
     for message in messages:
@@ -50,7 +51,7 @@ def initway(api_key,style):
 with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as init:
     with gr.Row():
         api_key = gr.Textbox(
-            lines=1, placeholder="api_key Here...", label="api_key",value="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")
+            lines=1, placeholder="api_key Here...", label="api_key",value="")
         style = gr.Textbox(
             lines=1, placeholder="style Here...", label="辩风" ,value="你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我，每次回答不超过100个字")
         btn = gr.Button(value="初始化")
