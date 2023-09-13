@@ -4,6 +4,7 @@ import openai, subprocess
 from pathlib import Path
 import pyttsx3
 
+engine = pyttsx3.init(driverName='espeak')
 # 换成你自己的api_key
 openai.api_key = "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"
 debatestyle = " "
