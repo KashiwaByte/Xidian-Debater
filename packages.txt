@@ -1,4 +1,2 @@
 espeak
 libespeak1
-sapi5
-nass
