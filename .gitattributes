@@ -1,0 +1,8 @@
+*.exe filter=lfs diff=lfs merge=lfs -text
+*.ffpreset filter=lfs diff=lfs merge=lfs -text
+C:/swanhuber1/Xidian-Debater/ffmpeg-2023-09-07-git-9c9f48e7f2-full_build/bin/*.exe filter=lfs diff=lfs merge=lfs -text
+C:/swanhuber1/Xidian-Debater/ffmpeg-2023-09-07-git-9c9f48e7f2-full_build/presets/*.ffpreset filter=lfs diff=lfs merge=lfs -text
+C:/swanhuber1/Xidian-Debater/ffmpeg-2023-09-07-git-9c9f48e7f2-full_build/bin/ffmpeg.exe filter=lfs diff=lfs merge=lfs -text
+C:/swanhuber1/Xidian-Debater/ffmpeg-2023-09-07-git-9c9f48e7f2-full_build/bin/ffplay.exe filter=lfs diff=lfs merge=lfs -text
+C:/swanhuber1/Xidian-Debater/ffmpeg-2023-09-07-git-9c9f48e7f2-full_build/bin/ffprobe.exe filter=lfs diff=lfs merge=lfs -text
+C:/swanhuber1/Xidian-Debater/ffmpeg-2023-09-07-git-9c9f48e7f2-full_build/bin/wsay.exe filter=lfs diff=lfs merge=lfs -text
