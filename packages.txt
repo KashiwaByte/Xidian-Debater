@@ -1,2 +1,3 @@
-espeak
+espeak-ng
 libespeak1
+ffmpeg

@@ -20,6 +20,7 @@ speech_config.speech_synthesis_voice_name='	zh-CN-XiaoxiaoNeural'
 speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
 
 
+
 # 换成你自己的api_key
 openai.api_key = "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"
 debatestyle = " "
