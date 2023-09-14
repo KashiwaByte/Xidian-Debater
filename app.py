@@ -68,6 +68,7 @@ def initway(api_key,style):
 
 
 with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as init:
+  
     with gr.Row():
         api_key = gr.Textbox(
             lines=1, placeholder="api_key Here...", label="api_key",value="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")
@@ -76,7 +77,23 @@ with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as i
         btn = gr.Button(value="初始化")
         btn.click(initway, [api_key, style])
 
-with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as Debate:
+
+
+title = "<h1 style='font-size: 40px;'><center>Xidian-Debater</center></h1>"
+author="<p align='center' style='font-size: 20px;'> 人工智能学院Kashiwa出品</p>"
+css1 = """
+.h1 {
+  text-align: center ;
+}
+   """
+Debate= gr.Blocks(css=css1)
+with Debate:
+    gr.Markdown(title)
+    gr.Markdown(author)
+    with gr.Row():
+         drop1 = gr.Radio(["正在使用", "无人使用", ],
+                     label="状态选择", info="可在无人使用时使用，使用时请点击按钮并输入用户名，使用结束记得点击重置")  # 单选
+         name = gr.Textbox(label="当前使用者姓名")
     with gr.Row():
         audio=gr.Audio(source="microphone", type="filepath",label="语音输入")
         trans = gr.Button("🎭 转录")
@@ -86,7 +103,7 @@ with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as D
     trans.click(transcribe, [audio],[output_transcript])
     output_button.click(eraser)
    
-test=gr.Interface(fn=transcribe, inputs=gr.Audio(source="microphone", type="filepath"), outputs="text")
+# test=gr.Interface(fn=transcribe, inputs=gr.Audio(source="microphone", type="filepath"), outputs="text")
 
-ui = gr.TabbedInterface([init,Debate,test],["初始化","辩论","测试"])
+ui = gr.TabbedInterface([init,Debate],["初始化","辩论",])
 ui.launch(share=True)
