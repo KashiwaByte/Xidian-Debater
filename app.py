@@ -24,6 +24,7 @@ speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, au
 # 换成你自己的api_key
 openai.api_key = None
 debatetype = '你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我'
+username=' '
 messages = [{"role": "system", "content": debatetype}]
 chat_transcript = ""
 def transcribe(audio):
@@ -59,27 +60,15 @@ def eraser():
     messages = [{"role": "system", "content": debatetype}]
     print('擦除成功✏️🧽')
 
-def initway(api_key,debateprompt):
+def initway(api_key,debateprompt,name):
     openai.api_key =api_key
     debatetype=debateprompt
+    username=name 
     messages = [{"role": "system", "content": debatetype}]
     print("初始化成功！🎉")
-    print( openai.api_key)
-    print(debatetype)
+    print("当前使用者："+ username)
+    print("当前辩风:" + debatetype)
     print(messages)
-
-
-
-with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as init:
-    with gr.Row():
-        api_key = gr.Textbox(
-            lines=1, placeholder="api_key Here...", label="api_key",value="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")
-        debateprompt = gr.Textbox(
-            lines=1, placeholder="style Here...", label="辩风" ,value="你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我，每次回答不超过100个字")
-        btn = gr.Button(value="初始化")
-        btn.click(initway, [api_key, debateprompt])
-
-
 
 title = "<h1 style='font-size: 40px;'><center>Xidian-Debater</center></h1>"
 author="<p align='center' style='font-size: 20px;'> 人工智能学院Kashiwa出品</p>"
@@ -88,14 +77,28 @@ css1 = """
   text-align: center ;
 }
    """
-Debate= gr.Blocks(css=css1)
-with Debate:
+
+with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as init:
     gr.Markdown(title)
     gr.Markdown(author)
+    with gr.Row():
+        api_key = gr.Textbox(
+            lines=2, placeholder="api_key Here...", label="api_key",value="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")
+        debateprompt = gr.Textbox(
+            lines=5, placeholder="style Here...", label="辩风" ,value="你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我，每次回答不超过100个字")
+       
     with gr.Row():
          drop1 = gr.Radio(["正在使用", "无人使用", ],
                      label="状态选择", info="可在无人使用时使用，使用时请点击按钮并输入用户名，使用结束记得点击重置")  # 单选
          name = gr.Textbox(label="当前使用者姓名")
+    btn = gr.Button(value="初始化")
+    btn.click(initway, [api_key, debateprompt,name])
+
+
+Debate= gr.Blocks(css=css1)
+with Debate:
+    gr.Markdown(title)
+    gr.Markdown(author)
     with gr.Row():
         audio=gr.Audio(source="microphone", type="filepath",label="语音输入")
         trans = gr.Button("🎭 转录")
