@@ -89,4 +89,4 @@ with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as D
 test=gr.Interface(fn=transcribe, inputs=gr.Audio(source="microphone", type="filepath"), outputs="text")
 
 ui = gr.TabbedInterface([init,Debate,test],["初始化","辩论","测试"])
-ui.launch()
+ui.launch(share=True)

@@ -1,3 +1,4 @@
-espeak-ng
+espeak
 libespeak1
 ffmpeg
+OpenSSL 1.1.1
