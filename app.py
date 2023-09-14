@@ -22,13 +22,13 @@ speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, au
 
 
 # 换成你自己的api_key
-openai.api_key = "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"
-debatestyle = " "
-messages = [{"role": "system", "content": '你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我'}]
+openai.api_key = None
+debatetype = '你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我'
+messages = [{"role": "system", "content": debatetype}]
 chat_transcript = ""
 def transcribe(audio):
     global messages
-    global chat_transcript
+    global chat_transcript 
     global speech_synthesizer
     myfile=Path(audio)
     myfile=myfile.rename(myfile.with_suffix('.wav'))
@@ -56,26 +56,28 @@ def transcribe(audio):
 
 def eraser():
     global messages
-    messages = [{"role": "system", "content": '你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我，每次回答不超过100个字'}]
+    messages = [{"role": "system", "content": debatetype}]
     print('擦除成功✏️🧽')
 
-def initway(api_key,style):
+def initway(api_key,debateprompt):
     openai.api_key =api_key
-
-    debatestyle = style
+    debatetype=debateprompt
+    messages = [{"role": "system", "content": debatetype}]
     print("初始化成功！🎉")
+    print( openai.api_key)
+    print(debatetype)
+    print(messages)
 
 
 
 with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as init:
-  
     with gr.Row():
         api_key = gr.Textbox(
             lines=1, placeholder="api_key Here...", label="api_key",value="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")
-        style = gr.Textbox(
+        debateprompt = gr.Textbox(
             lines=1, placeholder="style Here...", label="辩风" ,value="你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我，每次回答不超过100个字")
         btn = gr.Button(value="初始化")
-        btn.click(initway, [api_key, style])
+        btn.click(initway, [api_key, debateprompt])
 
 
 
