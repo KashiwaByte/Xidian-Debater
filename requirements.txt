@@ -1,3 +1,5 @@
 gradio==3.44.0
 openai==0.28.0
-pyttsx3==2.90
+azure.cognitiveservices.speech==1.32.1
+websocket==0.2.1
+websocket-client==0.56.0

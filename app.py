@@ -4,6 +4,7 @@ import openai, subprocess
 from pathlib import Path
 import pyttsx3
 
+
 # 换成你自己的api_key
 openai.api_key = "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"
 debatestyle = " "
@@ -26,7 +27,9 @@ def transcribe(audio):
     # print(response)
     messages.append(system_message)
 
-    pyttsx3.speak(system_message['content'])
+
+
+   # pyttsx3.speak(system_message['content'])
 
     chat_transcript = ""
     for message in messages:
