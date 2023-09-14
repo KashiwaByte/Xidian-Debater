@@ -45,7 +45,8 @@ def transcribe(audio):
     messages.append(system_message)
 
     speech_synthesis_result = speech_synthesizer.speak_text_async(system_message['content']).get()
-    
+    stream = stream = speechsdk.AudioDataStream(speech_synthesis_result)
+    stream.save_to_wav_file("outputs.wav")
     # 原windows tts 解决方案  subprocess.call(["wsay", system_message['content']])
 
     chat_transcript = ""
@@ -53,7 +54,7 @@ def transcribe(audio):
         if message['role'] != 'system':
             chat_transcript += message['role'] + ": " + message['content'] + "\n\n"
 
-    return chat_transcript
+    return chat_transcript,'outputs.wav'
 
 def eraser():
     global messages
@@ -100,12 +101,14 @@ with Debate:
     gr.Markdown(title)
     gr.Markdown(author)
     with gr.Row():
-        audio=gr.Audio(source="microphone", type="filepath",label="语音输入")
         trans = gr.Button("🎭 转录")
         output_button = gr.Button("重置🧽")
     with gr.Row():
-        output_transcript = gr.Textbox(label="语音转录输出")
-    trans.click(transcribe, [audio],[output_transcript])
+        audio_in=gr.Audio(source="microphone", type="filepath",label="语音输入")
+        audio_out=gr.Audio(source="microphone", type="filepath",label="语音输出")
+    
+    output_transcript = gr.Textbox(label="语音转录输出")
+    trans.click(transcribe, [audio_in],[output_transcript,audio_out])
     output_button.click(eraser)
    
 # test=gr.Interface(fn=transcribe, inputs=gr.Audio(source="microphone", type="filepath"), outputs="text")
