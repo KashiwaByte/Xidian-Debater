@@ -6,8 +6,7 @@ import os
 import azure.cognitiveservices.speech as speechsdk
 
 
-# Azure tts
-# This example requires environment variables named "SPEECH_KEY" and "SPEECH_REGION"
+# Azure tts 设定
 SPEECH_REGION='eastus'
 SPEECH_KEY= 'af2d4aa2348b4b73b60487c73e0eb431'
 
@@ -21,12 +20,14 @@ speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, au
 
 
 
-# 换成你自己的api_key
+# 初始变量设定
 openai.api_key = None
 debatetype = '你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我'
 username=' '
 messages = [{"role": "system", "content": debatetype}]
 chat_transcript = ""
+
+# stt和tts函数
 def transcribe(audio):
     global messages
     global chat_transcript 
@@ -56,11 +57,13 @@ def transcribe(audio):
 
     return chat_transcript,'outputs.wav'
 
+# 记录消除函数
 def eraser():
     global messages
     messages = [{"role": "system", "content": debatetype}]
     print('擦除成功✏️🧽')
 
+# 初始化函数
 def initway(api_key,debateprompt,name):
     openai.api_key =api_key
     debatetype=debateprompt
@@ -72,7 +75,7 @@ def initway(api_key,debateprompt,name):
     print(messages)
 
 title = "<h1 style='font-size: 40px;'><center>Xidian-Debater</center></h1>"
-author="<p align='center' style='font-size: 20px;'> 人工智能学院Kashiwa出品</p>"
+author="<p align='center' style='font-size: 20px;'> 人工智能学院辩论队Kashiwa出品</p>"
 css1 = """
 .h1 {
   text-align: center ;
@@ -84,7 +87,7 @@ with gr.Blocks(css="#chatbot{height:300px} .overflow-y-auto{height:500px}") as i
     gr.Markdown(author)
     with gr.Row():
         api_key = gr.Textbox(
-            lines=2, placeholder="api_key Here...", label="api_key",value="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")
+            lines=2, placeholder="api_key Here...", label="api_key",value="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")
         debateprompt = gr.Textbox(
             lines=5, placeholder="style Here...", label="辩风" ,value="你是一名逻辑性很强的资深辩手，你擅长通过数据论据和学理论据来反驳，你的反驳总是一阵见血，而且很有逻辑性。接下来我会提出我的观点，你需要做的就是针锋相对地反驳我，每次回答不超过100个字")
        
@@ -107,7 +110,7 @@ with Debate:
         audio_in=gr.Audio(source="microphone", type="filepath",label="语音输入")
         audio_out=gr.Audio(source="microphone", type="filepath",label="语音输出")
     
-    output_transcript = gr.Textbox(label="语音转录输出")
+    output_transcript = gr.Textbox(label="对话区")
     trans.click(transcribe, [audio_in],[output_transcript,audio_out])
     output_button.click(eraser)
    
