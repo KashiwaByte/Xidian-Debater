@@ -27,6 +27,7 @@ username=' '
 messages = [{"role": "system", "content": debatetype}]
 chat_transcript = ""
 sessions={}
+uuid_count=0
 
 
 # stt和tts函数
@@ -90,10 +91,13 @@ def eraser(session_id):
 # 初始化函数
 def initway(api_key,debateprompt,name):
     global sessions
+    global uuid_count
     openai.api_key =api_key
     debatetype=debateprompt
     username=name 
     messages = [{"role": "system", "content": debatetype}]
+
+    uuid_count+=1
     session_id=str(uuid.uuid4())     # 生成UUID
     sessions[session_id]={
         "api_key": api_key,
@@ -103,9 +107,9 @@ def initway(api_key,debateprompt,name):
     }
     print("初始化成功！🎉")
     print("当前使用者："+ username)
-    print("当前uuid："+ session_id)
+    print("当前uuid:"+ session_id)
     print("当前辩风:" + debatetype)
-    print(messages)
+    print('当前已服务:'+str(uuid_count)+'(人次)')
     return session_id
 
 title = "<h1 style='font-size: 40px;'><center>Xidian-Debater</center></h1>"
